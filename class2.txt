@@ -1,0 +1,818 @@
+if()
+{
+}
+else()
+{
+}
+
+
+
+switch
+case 1: 
+case 2:
+
+Operators:
+
+three types
+Unary binary ternary
+
+y= not a
+y = a+b
+y= a?b:c
+number specification:
+
+
+behavioural modelling:
+simulation time...
+ 
+getting the output...
+
+procedure:
+
+always initial
+
+always??
+
+clock =1'b0;
+
+always #10 clock= ~clock;
+
+initial
+#10 clock=~clock;
+a= 1'b0;
+b=3'b101
+begin
+#10 a= ~a;
+#10 b= ~b;   20s
+end
+
+Procedural:
+
+reg, integers and real variables
+
+assignment
+
+procedural assignment statements
+Blocking(=)--Nonblocking(<=)
+
+timing controls:
+3--delay based; event based;level sensitive
+
+
+dataflow modelling:
+
+dataflow ??
+
+and or xor xnor nand nor
+
+and b as inputs
+
+0 0 0
+0 1 0
+1 0 0
+1 1 1
+
+
+modules and ports
+
+module: it is a building block...
+
+
+full adder
+
+and or
+
+module:
+
+5 parts
+
+
+sr latch
+
+
+2 nand gates
+ sbar
+  r bar
+
+
+q and qbar
+
+
+
+ 
+
+
+
+
+
+
+int a;
+double a;
+sized and unsized
+
+
+sized: <size><base format><number>
+
+
+
+decimal hexa binary
+
+6'b 010100
+
+unsized
+
+32 bits
+
+ b10
+
+x and z values
+
+
+ok carry on
+
+x - unknown
+z- high impedance
+
+negative numbers:
+
+-24
+-<><><>
+
+-4'd6789
+4'd-6789
+
+-<s><b><n>
+
+underscore and question marks:
+
+1001101_1000000000
+
+question marks:
+
+
+z --- ?
+
+high
+
+strings:
+character: 'a'
+
+"hi"
+
+ASCII 
+
+identifiers:
+
+keywords: 
+
+reg 
+input
+output
+asign 
+begin
+
+data types:
+
+four values and eight strengths
+
+0 1 X Z
+
+
+
+supply     
+strong 
+pull 
+large 
+weak
+medium
+small
+highZ
+
+strong1 and strong0
+
+unknown
+
+strong1 and weak0 
+
+strong1
+
+nets: 
+
+wire..
+inputs are also wires
+
+
+nets should be driven by inputs
+
+inputs can be drivwn by itself
+
+both can be represented as wires
+
+registers:
+
+wire a,b;
+wire c;
+50 ns;
+and(c,a,b);
+01
+10
+11
+00
+
+
+integer and real
+
+real a= 2.13;
+int b= real a;
+
+time
+
+time s
+
+ps
+ns ms
+
+Arrays:
+
+<array-name>[subscript] 
+
+reg count[0:15]
+
+
+
+parameters:
+
+constants...
+variable...
+
+constant bit=32
+varaible bit;
+
+
+system tasks:
+
+$<keyword>
+
+monitor
+
+time
+
+module test
+
+...
+..
+end module
+$time
+
+$stop
+$finish
+
+
+compiler directives:
+
+`include
+
+`define
+
+
+full adder
+input a,b,c_in;
+output  s,c_out;
+
+full(s,C-out,a,b,c_in)
+
+constant word_size 32
+
+ strengths:
+
+strong weak--- 0 and 1
+large medium small---- trireg
+highz---
+
+supply and pull  
+
+
+
+module SR_latch
+
+output q,qbar
+input sbar, rbar
+
+nandn1()
+nandn2()
+
+endmodule
+
+
+ports:
+
+terminals...
+
+input port
+output
+inout
+
+wires
+
+connection rules:
+
+
+inputs,reg--- external envt
+
+reg[3:0]a,b;
+reg c_in;
+reg [3:0] sum;
+wire c_out;
+fulladd(s,c_out,a,b,c_in);
+illegal connection
+
+
+connecting the ports to external envt:
+
+connections by ordered list:
+
+a,b,c_in
+s,c_out
+
+16-bit full adder:
+
+4 4-bit adders:
+
+ordered list
+
+connecting the ports by name:
+
+a0,a1,a2,a3
+b0,b1,b2,b3
+
+hieararchial names:
+
+module:
+
+sr_latch			q and qbar
+
+n1 and n2
+
+faculty--hod--director
+
+
+module.n1.rbar
+
+
+functions and tasks:
+
+input output
+
+inputs
+
+tasks--- simulation time
+functions--- zero simualtion time
+delays..
+
+will have delays-- tasks..
+
+example for function and task..
+
+sequential ckts are tasks...
+combinational ckts are functions.
+
+
+task and function----- written in the module
+
+task... endtask..
+
+delay and simulation---- tasks
+output arguments
+
+function... endfunction...
+no delay and no simulation----functions
+no output...
+only inputs
+
+brief of today by anyone----
+
+declare a module
+ports
+connection of ports
+hierarchial names
+functions and tasks...
+
+abstraction levels:
+
+beahvioural, gate-- structural , RTL-- data flow
+
+top down 
+bottom up
+
+gate level modelling...
+
+
+assignment to Nagendra Sir
+
+& 0 1 x z  nand
+0 0 0 0 0
+1 0 1 x x
+x 0 x x x
+z 0 z x x
+
+a and b out
+
+instantiation
+
+and(out,a,b)
+
+^ 0 1 x z   nor					o*e=0
+0 0 1 x x						0+3=3
+1 1 1 1 1
+x x 1 x x
+z z 1 x x
+
+a and b out
+instantiation
+or(out,a,b);
+
+xor,xnor gates and also the instantiations
+
+Buf and not gates:
+
+bufif0 and bufif1
+notif0 and notif1
+
+0 1 x z
+0 x for bufif0-- L
+0 z for bufif0-- L
+
+buffer gate with one input and one ctrl input
+
+buf(out,in)
+bufif0
+bufif1
+
+notif0
+notif1
+
+4 to 1 Mux
+
+4 inputs--- 1 output and 2 selection lines
+
+4 and 1 or
+
+s0 s1 
+
+
+wire out
+a0,a1,a2,a3
+s0,s1
+
+4 and 1 or 2 inverters
+
+wire yo,y1,y2,y3;
+
+and(y0,a0,s0bar,s1bar);
+and(y1,a1,s0bar,s1);
+and(y2,a2,s0,s1bar);
+and(y3,a3,s0,s1);
+
+or(out,y0,y1,y2,y3);
+
+gate delays:
+
+Rise, fall and turnoff
+
+a0=0 #10s
+
+rise delay... current position to max
+fall delay... current position to min
+turnoff delay... min or max to stop state
+
+
+dataflow modelling:
+
+dataflow ??
+
+full adder..
+
+dataflow...
+
+logic synthesis...
+
+rise fall turnoff
+
+and(out,a,b)
+#10 ns
+
+assign #10s out= a+b;
+
+Regular assignment
+Net Declaration
+
+wire #10 out=a*b;
+-------------------------------------------------
+
+wire out;
+assign #10 out=a*b;
+
+assign out= #10 a*b;
+
+
+wire #10 out;
+assign out=a*b;
+
+z= x + y ;
+
+operands operators expression
+
+types of operators u know??
+arithmetic and logical
++ - * /		& / ^ 
+
+10 types of operators
+
+Arithemtic-- no. of operands-- 2
+Logical---1
+Relational--2
+Equality--2
+Bitwise--2..1
+Reduction
+Shift--2
+Concatenation--2
+Replication--1
+Conditional--3
+
+< > <= >=
+
+a=b;
+
+a==b;
+
+== !==
+if(a!==b)
+{
+}
+
+*valid for the inputs 0 and 1 only
+
+X and Z
+
+a===b
+
+1010 and 1100
+
+and or xor xnor
+
+negation--- bit wise operator-- one operand
+
+1010
+0101---- o
+
+
+shift operators:
+
+movement
+
+right shift and left shift
+a>>b             a<<b
+
+
+concatenation: grouping..
+
+100 and 110
+
+100110
+
+{ }
+
+a=100;b=110;
+out={a,b};
+
+out=100110;
+
+Replication:
+
+copy of original
+
+{100}
+
+a=1'b1;
+y={4(a)};
+
+y= 4'b1111;
+
+conditional:
+
+a ? b : c
+
+(a==b)?0:1
+
+condition?true:false
+
+
+multiplexer:
+
+and(y0,a0,s0bar,s1bar);
+and(y1,a1,s0bar,s1);
+and(y2,a2,s0,s1bar);
+and(y3,a3,s0,s1);
+
+or(out,y0,y1,y2,y3);
+
+y=(y0*a0*s0bar*s1bar)+(y1*a1*s0bar*s1)+(y2*a2*s0*s1bar)+(y3*a3*s0*s1);
+
+assign y =(a0 & ~s0 & ~s1)|
+	  (a1 & ~s0 & s1)|
+	  (a2 & s0 & ~s1)|
+	  (a3 & s0 & s1);
+
+Modelsim Installation:
+
+one from one.....
+
+Himavanth
+Vijay
+Charles  Monday... Tuesday
+
+
+delay-- regular delay, intra assignment, zero delay
+
+regular delay:
+
+initial
+
+begin
+#10 a= 1;
+#20 b= 0;
+end
+
+intra assignment:
+a= 0;b=1;c=0;
+#3 a = #5 b + c;
+time =0s
+a=0,b=0,c=0
+time =5s
+a=1;b=1;c=0
+time =8s
+a=1
+
+a=0 b=0 c=1
+a = b + #ns c;
+time=0s a=1
+time=ns a=1
+Regular vs Intra assignment
+
+#ns x = ~x;
+
+a = b + #ns c;
+
+delay = 2s
+
+zero delays:
+
+execution of the statement will be at the last.
+
+
+initial
+x=0;
+
+
+-- 
+--
+initial
+y=0;
+
+regular delay; intra assignment and zero-- delay 
+
+a= #2b + #2c;
+initial
+x=0 ;
+
+initial
+#0 y=1 ; 
+#0 z=1 ;
+
+event based:
+x=0;
+#2 x=2;
+
+regular event
+named event
+control
+
+@(clock)q = d
+
+@(posedge clock) q = d; 0 1 x z
+
+q = @(posedge clock) d; 0 1 x z
+
+named event:
+
+always @(clock)
+
+x="Hello"
+
+always @(x)
+
+z = x
+
+
+x=data-transfer--- packets
+y=medium
+z=data-buffer
+
+
+delays
+
+do u remember??
+
+regular delays...zero delays..intra assignment
+
+timing controls: 3 types
+delay-based
+event-based
+level-sensitive
+
+event-based and delay-based
+
+#20 ns
+
+@(posedge clock)
+wait (count) #20 count=count + 1;
+
+conditional statement: a?b:c
+
+if(a>b)
+
+begin
+---
+----
+end
+else
+begin
+---
+--
+end
+else if
+begin
+-----
+end
+
+case statements:
+
+case:
+case 00:
+case 01:
+default
+
+Loops:
+
+what kind of loops are present in programming??
+for; while; do-while; forever
+
+for-- keyword.
+
+for(initialization;condition;increment)
+
+always or initial
+
+for(count=0;count<32;count=count+1)
+$display ("count=%d",count);
+
+count=0;
+while(count<32)
+begin
+$display("count=%d",count);
+count=count+1;
+end
+
+forever-- ever ending loop
+
+begin
+clock=1'b1;
+forever #30 clock = ~ clock;  // for a period of clock with 90 seconds
+end
+
+designing of 4 to 1 mux:
+
+module(out,s1,s0,a0,a1,a2,a3)
+output out;
+input a0,a1,a2,a3,s1,s0;
+
+always @(s1 or s0 or a0 and a1 and a2 and a3)
+begin
+case({s1,s0})
+2'b00: out=a0;
+2'b01: out=a1;
+2'b10: out=a2;
+2'b11: out=a3;
+
+
+
+
+
+
+
+
+
+
+
+
+
