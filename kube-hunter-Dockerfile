@@ -1,0 +1,18 @@
+#Run docker run --rm aquasec/kube-hunter --cidr 192.168.0.0/24
+#else Run  docker run -it --rm --network host aquasec/kube-hunter 
+FROM python:2.7.15-alpine3.8
+
+RUN apk add --update \
+    linux-headers \
+    build-base \
+    tcpdump \
+    wireshark
+
+RUN mkdir -p /kube-hunter 
+COPY ./requirements.txt /kube-hunter/.
+RUN pip install -r /kube-hunter/requirements.txt
+
+COPY . /kube-hunter
+WORKDIR /kube-hunter
+
+ENTRYPOINT ["python",  "kube-hunter.py"]
