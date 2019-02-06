@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+  namespace: < where the pod has to be created>
+spec:
+  containers:
+  - name: <any name>
+    image: vish/stress
+	resources:
+	  limits:
+	    cpu: "100"
+	  requests:
+	    cpu: "100"
+	args:
+	- -cpus
+	- "2"
+
+#Run it
+#kubectl create -f <filename>
+
+#The requested value is too big for the node to handle so the pod will be in pending state only
+
