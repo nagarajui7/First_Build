@@ -1,0 +1,18 @@
+#get the details of login from config.json file
+cat ~/.docker/config.json
+
+#create secret using the docker login details
+kubectl create secret docker-registry <secret-name> --docker-server=https://index.dokcer.io \
+                        --docker-username=<username> --docker-password=<password>
+#using the secret in a pod yaml file
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+  namespace: <optional>
+spec:
+  containers:
+  - name: private-reg-container
+    image: <image name present in our private docker registry>
+  imagePullSecrets:
+  - name: <secret-name>
