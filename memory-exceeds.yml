@@ -1,1 +1,26 @@
-#
+#case where memory request exceeds memory limit
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+  namespace: <where the pod needs to be created>
+spec:
+  containers:
+  - name: <any name>
+    image: polinux/stress
+    resources:
+      requests: 
+        memory:"50Mi"
+      limits:
+        memory:"100Mi"
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "250M", "--vm-hang", "1"]
+
+#Run it
+#kubectl create -f <filename>
+
+#since the limit is more than the available memory the pod gets restarted multiple times
+
+#ERROR:
+#... Normal  Created   Created container with id 66a3a20aa7980e61be4922780bf9d24d1a1d8b7395c09861225b0eba1b1f8511
+#... Warning BackOff   Back-off restarting failed container
