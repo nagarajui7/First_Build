@@ -15,6 +15,16 @@ spec:
         memory: "100Mi"
     command: ["stress"]
     args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]
-    
 
-  
+#Running it
+#kubectl create -f <filename>
+
+#check it is running
+#kubectl get pods -n <namespace>
+
+#detailed info of pod
+#kubectl get pod <pod-name> --output=yaml -n <namespace>
+
+#Get metrics
+#kubectl top pod <pod-name> -n <namespace>
+
