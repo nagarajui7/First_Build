@@ -1,0 +1,29 @@
+#CPU
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+  namespace: < where the pod has to be created>
+spec:
+  containers:
+  - name: <any name>
+    image: vish/stress
+	resources:
+	  limits:
+	    cpu: "1"
+	  requests:
+	    cpu: "0.5"
+	args:
+	- -cpus
+	- "2"
+
+#Run it
+#kubectl create -f <filename>
+
+#check the pod output
+#kubectl top pod <pod name> -n <namespace>
+
+#NAME                        CPU(cores)   MEMORY(bytes)
+#cpu-demo                    974m         <something>
+
+#Still we gave the arguments to use 2GB,Since we have specified max limit as 1GB,it will use only 1GB to the max
