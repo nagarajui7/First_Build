@@ -1,0 +1,18 @@
+#two types of handlers
+#postStart and preStop
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+spec:
+  containers:
+  - name: <any name>
+    image: nginx
+    lifecycle:
+      postStart:
+        exec:
+          command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+      preStop:
+        exec:
+          command: ["/usr/sbin/nginx","-s","quit"]
