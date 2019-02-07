@@ -1,2 +1,56 @@
 #env variables of a container
 apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+  labels:
+    purpose: demo
+spec:
+  containers:
+  - name: <any name>
+    image: gcr.io/google-samples/node-hello:1.0
+    env:
+    - name: <any name>
+      value: "Hello"
+
+#Test by running the below commands:
+#kubectl create -f <filename>
+#kubectl exec -it <pod name> -- /bin/bash
+#printenv
+
+
+#env variables of a Pod to a container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <any name>
+  namespace: <any name>
+spec:
+  containers:
+  - name: <any name>
+    image: k8s.gcr.io/busybox
+    command: [ "sh", "-c"]
+    args:
+    - while true; do
+        printenv MY_NODE_NAME MY_POD_NAME MY_POD_NAMESPACE;
+      done;
+    env:
+      - name: MY_NODE_NAME
+        valueFrom: 
+          fieldRef:
+            fieldPath: spec.nodeName
+      - name: MY_POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: MY_POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+            
+ #Test by running the below commands:
+ #kubectl create -f <filename>
+ #kubectl logs <podname>
+ #kubectl exec -it <podname> --sh
+ #printenv
+      
