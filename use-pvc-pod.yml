@@ -26,6 +26,9 @@ spec:
   resources:
     requests:
       storage: 3Gi
+#Reclaim policies for a PV are Retain Recycle and Delete. Default is delete
+#We can change this if needed
+#kubectl patch pv <your-pv-name> -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
 
 #create pod using pvc
 kind: Pod
