@@ -6,6 +6,7 @@ metadata:
   labels:
     app: kibana
 spec:
+  type: NodePort
   ports:
   - port: 5601
   selector:
@@ -38,6 +39,6 @@ spec:
             cpu: 100m
         env:
           - name: ELASTICSEARCH_URL
-            value: http://elasticsearch:9200
+            value: http://batchu-kube-elastic:9200
         ports:
         - containerPort: 5601
