@@ -1,0 +1,34 @@
+#Configures the loadbalancer for HTTP/TCP traffic
+apiVersion: v1
+kind: Gateway
+metadata:
+  name: bookinfo-gateway
+spec:
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - bookinfo.com
+    tls:
+      mode: SIMPLE
+      serverCertificate: /tmp/tls.crt
+      privatekey: /tmp/tls.key
+      
+ #Binding this gateway to a virtualservice
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: bookinfo
+spec:
+  hosts:
+    - bookinfo.com
+  gateways:
+  - bookinfo-gateway # <---- bind to gateway
+  http:
+  - match:
+    - uri:
+        prefix: /reviews
+    route:
+    ...
