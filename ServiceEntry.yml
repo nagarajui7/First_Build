@@ -1,0 +1,19 @@
+#Used for adding additional entries into the service registry that Istio maintains internally
+#Two type: 
+#Mesh internal: Used to add services to the mesh explicitly
+#Mesh external: Add services external to the mesh
+apiVersion: v1
+kind: ServiceEntry
+metadata:
+  name: foo-ext-svc
+spec:
+  hosts:
+  - *.foo.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
+
