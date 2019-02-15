@@ -1,0 +1,40 @@
+#To configure an Istio authorization policy, you specify a ServiceRole and ServiceRoleBinding.
+#They are defined as Kubernetes CustomResourceDefinition (CRD) objects.
+
+#Role
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRole
+metadata:
+  name: service-admin
+  namespace: default
+spec:
+  rules:
+  - services: ["products.default.svc.cluster.local"]
+    paths: ["*/reviews"] #optional(ex: /books/reviews, /events/booksale/reviews, /reviews)
+    methods: ["GET", "HEAD"]
+    #optional
+    constraints:
+    - key: request.headers[version]
+      values: ["v1", "v2"]
+
+#Role Binding
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: test-binding-products
+  namespace: default
+spec:
+  subjects:
+  - user: "service-account-a"
+  - user: "istio-ingress-service-account"
+    properties:
+      request.auth.claims[email]: "a@foo.com"
+      source.principal: "*"
+  roleRef:
+    kind: ServiceRole
+    name: "products-viewer"
+
+
+
+
+
