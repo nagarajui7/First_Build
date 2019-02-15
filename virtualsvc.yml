@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  hosts: 
+  - reviews
+  http:
+  # Inject a fault
+  - fault:
+      delay:
+        percent: 10
+        fixedDelay: 10s
+      route:
+      - destination:
+          host: reviews
+          subset: v1
+        #Declaring weights
+        weight: 75
+      #Declaring time outs
+      timeout: 10s
+      #Declaring retries
+      retries:
+        attempts: 3
+        perTryTimeout: 2s
+        
+        
+  
