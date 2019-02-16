@@ -57,3 +57,11 @@ curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
 
 #check in browser
 http://$GATEWAY_URL/productpage
+
+#apply destination rules
+#if mutual TLS enabled
+kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
+
+#if mutual TLS not enabled
+kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml
+
