@@ -1,0 +1,59 @@
+#Prerequisities: Make sure Kubernetes cluster is up and running
+#Package download
+curl -L https://git.io/getLatestIstio | sh -
+cd istio-1.0.6
+export PATH=$PWD/bin:$PATH
+
+#Apply Isto's Custom Resource Definition(CRD) to kube-apiserver
+kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
+
+#Istio's core components
+#OP:1 -> without mutual TLS authentication between sidecars( if it is a existing cluster)
+kubectl apply -f install/kubernetes/istio-demo.yaml
+
+#OP:2 -> with default mutual TLS authentication(for newly created cluster)
+kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+
+#Verify Installation
+#check for istio-pilot, istio-ingressgateway, istio-policy, istio-telemetry, prometheus, istio-galley, 
+#and, optionally, istio-sidecar-injector
+kubectl get svc -n istio-system
+#check for istio-pilot-*, istio-ingressgateway-*, istio-egressgateway-*, istio-policy-*, istio-telemetry-*, 
+#istio-citadel-*, prometheus-*, istio-galley-*, and, optionally, istio-sidecar-injector-*.
+kubectl get pods -n istio-system
+
+
+#################################################SAMPLE APPLICATION#############################################
+#Deploying a book info application consisting of 4 micro services(bookinfo, details, reviews, ratings)
+#using Manual sidecar injection
+istioctl kube-inject -f samples/sleep/sleep.yaml | kubectl apply -f -
+
+#check sidecar into deployment
+kubectl get deployment sleep -o wide
+
+#deploy the micro services
+kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+
+#check for services and pods related to application
+kubectl get services
+kubectl get pods
+
+#To access the appn outside the cluster we need to configure the ingress gateway
+kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl get gateway
+
+#Get the INGRESS_HOST and INGRESS_PORT details
+#OP:1 -> If we have external load balancer
+kubectl get svc istio-ingressgateway -n istio-system
+
+#OP:2 -> if we dont have external load balancer, we user nodeport
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o 'jsonpath={.items[0].status.hostIP}')
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+
+#check service is running
+curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+
+#check in browser
+http://$GATEWAY_URL/productpage
