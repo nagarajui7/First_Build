@@ -65,3 +65,5 @@ kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
 #if mutual TLS not enabled
 kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml
 
+#Display destination rules
+kubectl get destinationrules -o yaml
