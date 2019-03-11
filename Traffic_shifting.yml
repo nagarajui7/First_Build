@@ -1,0 +1,20 @@
+#As said before, we have 3 versions of the application. If we want to route traffic from one version to other gradually, do as stated below:
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  hosts:
+    - reviews
+  http:
+  - route:
+    - destination:
+        host: reviews
+        subset: v1
+      weight: 50
+    - destination:
+        host: reviews
+        subset: v3
+      weight: 50
+      
+#once this file is run, traffic will be routed to v1 and after sometime refresh the page, the page will show v3
