@@ -1,0 +1,33 @@
+#Make sure we have created the routing for the applcation
+#kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+#kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+
+#Injecting delay for HTTP response
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ratings
+spec:
+  hosts:
+  - ratings
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: jason
+    fault:
+      delay:
+        percent: 100
+        fixedDelay: 7s
+    route:
+    - destination:
+        host: ratings
+        subset: v1
+  - route:
+    - destination:
+        host: ratings
+        subset: v1
+ 
+#Now if we open the product page and login with the user jason, we will get an error reponse
+#Error fetching product reviews!
+#Sorry, product reviews are currently unavailable for this book.
